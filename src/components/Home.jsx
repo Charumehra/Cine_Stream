@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import MovieCard from "./MovieCard";
 
 const Home = ({ query }) => {
@@ -7,43 +7,59 @@ const Home = ({ query }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const loaderRef = useRef(null);
+  const debounceTimerRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      setDebouncedQuery(query);
       setMovies([]);
       setPage(1);
     }, 500);
 
-    return () => clearTimeout(timer);
-  }, [query]);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      try {
-        const url = query
-          ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&query=${query}&page=${page}`
-          : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&page=${page}`;
-
-        const res = await fetch(url);
-
-        if (!res.ok) {
-          throw new Error(`Error: ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        setMovies((prev) => [...prev, ...data.results]);
-      } catch (error) {
-        console.error(error.message);
-      } finally {
-        setLoading(false);
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
     };
+  }, [query]);
 
+  const fetchMovies = useCallback(async () => {
+    setLoading(true);
+    try {
+      const url = debouncedQuery
+        ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${debouncedQuery}&page=${page}`
+        : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=${page}`;
+
+      const res = await fetch(url);
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      setMovies((prev) => {
+        const newMovies = data.results.filter(
+          (movie) => !prev.some((existingMovie) => existingMovie.id === movie.id)
+        );
+        return [...prev, ...newMovies];
+      });
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [debouncedQuery, page, API_KEY]);
+
+  useEffect(() => {
     fetchMovies();
-  }, [page, query, API_KEY]);
+  }, [fetchMovies]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
