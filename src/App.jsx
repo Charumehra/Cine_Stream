@@ -9,7 +9,7 @@ import { useState } from "react";
 const App = () => {
   const [query, setQuery] = useState("");
   return (
-    <>
+    <div className="overflow-y-scroll no-scrollbar h-screen">
       <Navbar query={query} setQuery={setQuery} />
       <Routes>
         <Route path="/" element={<Home query={query} />} />
@@ -17,7 +17,7 @@ const App = () => {
         <Route path="/top-rated" element={<TopRated />} />
         <Route path="/popular" element={<Popular />} />
       </Routes>
-    </>
+    </div>
   );
 };
 
