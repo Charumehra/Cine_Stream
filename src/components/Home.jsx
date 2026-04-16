@@ -42,7 +42,7 @@ const Home = ({ query }) => {
         if (!res.ok) throw new Error(`Error: ${res.status}`);
 
         const data = await res.json();
-
+        
         setMovies((prev) => {
           const newMovies = data.results.filter(
             (movie) => !prev.some((m) => m.id === movie.id),
