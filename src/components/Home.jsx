@@ -36,13 +36,13 @@ const Home = ({ query }) => {
       try {
         const url = debouncedQuery
           ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${debouncedQuery}&page=${page}`
-          : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=${page}`;
+          : `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&page=${page}`;
 
         const res = await fetch(url);
         if (!res.ok) throw new Error(`Error: ${res.status}`);
 
         const data = await res.json();
-        
+
         setMovies((prev) => {
           const newMovies = data.results.filter(
             (movie) => !prev.some((m) => m.id === movie.id),
