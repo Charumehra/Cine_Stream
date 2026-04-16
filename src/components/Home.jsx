@@ -76,10 +76,9 @@ const Home = ({ query }) => {
 
   const getMovieFromGemini = async (mood) => {
     const GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
-    console.log(GEMINI_KEY);
 
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,7 +115,6 @@ const Home = ({ query }) => {
     setAiLoading(true);
     try {
       const movieTitle = await getMovieFromGemini(mood);
-      console.log("AI Response:", movieTitle);
       const movieData = await searchMovieTMDB(movieTitle);
 
       setAiMovie(movieData);
@@ -135,9 +133,11 @@ const Home = ({ query }) => {
       )}
 
       {aiMovie && (
-        <div className="mb-8">
-          <h2 className="text-xl font-bold mb-4">AI Suggestion 🎬</h2>
-          <MovieCard movie={aiMovie} />
+        <div className="mb-12">
+          <h2 className="text-xl font-bold mb-4 text-red-500">AI Suggestion</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <MovieCard movie={aiMovie} />
+          </div>
         </div>
       )}
 
@@ -148,10 +148,26 @@ const Home = ({ query }) => {
       )}
 
       {movies.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
+        <div className="w-full">
+          <h2 className="font-serif text-2xl my-6 border-b border-gray-800 pb-2">
+            Discover Movies
+          </h2>
+
+          <div
+            className="grid 
+      grid-cols-2          
+      xs:grid-cols-2       
+      sm:grid-cols-3     
+      md:grid-cols-4        
+      lg:grid-cols-5        
+      xl:grid-cols-6       
+      gap-4 sm:gap-6       
+    "
+          >
+            {movies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
         </div>
       )}
 
