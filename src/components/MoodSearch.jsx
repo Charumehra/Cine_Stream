@@ -5,6 +5,7 @@ const MoodSearch = ({ onSearch }) => {
 
   return (
     <div className="flex justify-end gap-2 mb-6">
+      <p>Moody search</p>
       <input
         type="text"
         placeholder="Describe your mood..."
