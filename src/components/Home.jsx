@@ -134,8 +134,24 @@ const Home = ({ query }) => {
 
       {aiMovie && (
         <div className="mb-12">
-          <h2 className="text-xl font-bold mb-4 text-red-500">AI Suggestion</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="flex items-center gap-2 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              AI Pick
+            </h2>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-600/20 text-red-400 border border-red-500/30">
+              For You
+            </span>
+          </div>
+
+          <div
+            className="grid 
+        grid-cols-2          
+        sm:grid-cols-3     
+        md:grid-cols-4        
+        lg:grid-cols-5        
+        xl:grid-cols-6       
+        gap-4 sm:gap-6"
+          >
             <MovieCard movie={aiMovie} />
           </div>
         </div>
@@ -149,9 +165,13 @@ const Home = ({ query }) => {
 
       {movies.length > 0 && (
         <div className="w-full">
-          <h2 className="font-serif text-2xl my-6 border-b border-gray-800 pb-2">
-            Discover Movies
-          </h2>
+          <div className="flex items-center justify-between my-8">
+            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-red-500 via-pink-500 to-red-600 bg-clip-text text-transparent tracking-wide">
+              Discover Movies
+            </h2>
+
+            <div className="h-[2px] flex-1 ml-4 bg-gradient-to-r from-red-500/40 to-transparent rounded-full"></div>
+          </div>
 
           <div
             className="grid 
