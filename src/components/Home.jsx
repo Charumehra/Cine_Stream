@@ -35,7 +35,7 @@ const Home = ({ query }) => {
       setLoading(true);
       try {
         const url = debouncedQuery
-          ? `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&query=${debouncedQuery}&page=${page}`
+          ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${debouncedQuery}&page=${page}`
           : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=${page}`;
 
         const res = await fetch(url);

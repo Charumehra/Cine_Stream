@@ -30,7 +30,7 @@ const MovieCard = ({ movie }) => {
 
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "https://via.placeholder.com/300x450";
+    : `https://dummyimage.com/300x450/000/fff&text=No+Image`;
 
   return (
     <div className="group relative overflow-hidden rounded-3xl cursor-pointer bg-slate-950 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-red-500/20">
