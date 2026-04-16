@@ -1,45 +1,22 @@
-import { useState, useEffect } from "react";
-import MovieCard from "./components/MovieCard";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import { Routes, Route } from "react-router-dom";
+import Favourites from "./components/Favourites";
+import TopRated from "./components/TopRated";
+import Popular from "./components/Popular";
+import { useState } from "react";
 
 const App = () => {
-  const API_KEY = import.meta.env.VITE_TMDB_KEY;
-
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
-      );
-      const data = await res.json();
-      setMovies(data.results);
-      setLoading(false);
-    };
-
-    fetchMovies();
-  }, []);
-
+  const [query, setQuery] = useState("");
   return (
-    <div className="bg-black min-h-screen text-white">
-      <Navbar />
-
-      {loading ? (
-        <div className="flex justify-center items-center h-screen ">
-          <div className="animate-spin h-12 w-12 border-4 border-red-600 border-t-transparent rounded-full"></div>
-        </div>
-      ) : (
-        <div className="px-8 py-10">
-          <h3 className="text-2xl font-semibold mb-6">Popular Now</h3>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        </div>
-      )}
+    <div className="overflow-y-scroll no-scrollbar h-screen">
+      <Navbar query={query} setQuery={setQuery} />
+      <Routes>
+        <Route path="/" element={<Home query={query} />} />
+        <Route path="/favourites" element={<Favourites />} />
+        <Route path="/top-rated" element={<TopRated />} />
+        <Route path="/popular" element={<Popular />} />
+      </Routes>
     </div>
   );
 };

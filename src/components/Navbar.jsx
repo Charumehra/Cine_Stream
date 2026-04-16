@@ -1,103 +1,81 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ query, setQuery }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <nav className="bg-gradient-to-r from-red-800 via-red-600 to-orange-600 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <div className="f cursor-pointer hover:opacity-90 transition-opacity">
-            <h1 className="text-2xl font-bold text-black tracking-widest">
-              Cine-Stream
-            </h1>
-          </div>
+          <Link to="/" className="text-2xl font-bold text-black tracking-widest cursor-pointer">
+            Cine-Stream
+          </Link>
 
           <div className="hidden md:flex space-x-8 items-center">
-            <a
-              href="#home"
-              className="text-black hover:text-blue-200 transition-colors duration-200 font-medium"
-            >
+            <Link to="/" className="text-black hover:text-blue-200 font-medium cursor-pointer">
               Home
-            </a>
-            <a
-              href="#popular"
-              className="text-black hover:text-blue-200 transition-colors duration-200 font-medium"
-            >
+            </Link>
+            <Link to="/popular" className="text-black hover:text-blue-200 font-medium cursor-pointer">
               Popular
-            </a>
-            <a
-              href="#top-rated"
-              className="text-black hover:text-blue-200 transition-colors duration-200 font-medium"
-            >
+            </Link>
+            <Link to="/top-rated" className="text-black hover:text-blue-200 font-medium cursor-pointer">
               Top Rated
-            </a>
-            <a
-              href="#upcoming"
-              className="text-black hover:text-blue-200 transition-colors duration-200 font-medium"
-            >
-              Upcoming
-            </a>
+            </Link>
+            <Link to="/favourites" className="text-black hover:text-blue-200 font-medium cursor-pointer">
+              Favourites
+            </Link>
           </div>
+
           <div className="hidden md:flex items-center">
+           <Link to="/">
             <div className="relative">
               <input
                 type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search movies..."
-                className="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black w-48"
+                className="px-4 py-2 rounded-full text-black outline hover:outline-2 w-48"
               />
-              <button className="absolute right-3 top-2 text-black ">
-                <Search className="w-5 h-5" />
-              </button>
+              <Search className="absolute right-3 top-2 text-black w-5 h-5" />
             </div>
+           </Link>
           </div>
 
           <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-white hover:text-blue-200 focus:outline-none transition-colors"
-            >
-              {isOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
+            <button onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? (
+                <X className="w-6 h-6 text-black" />
+              ) : (
+                <Menu className="w-6 h-6 text-black" />
+              )}
             </button>
           </div>
         </div>
 
         {isOpen && (
           <div className="md:hidden pb-4 space-y-2">
-            <a
-              href="#home"
-              className="block px-4 py-2 rounded-full text-black hover:bg-black hover:text-white transition-colors"
-            >
+            <Link to="/" className="block px-4 py-2 text-black hover:bg-black hover:text-white transition-colors">
               Home
-            </a>
-            <a
-              href="#popular"
-              className="block px-4 py-2 rounded-full text-black hover:bg-black hover:text-white transition-colors"
-            >
+            </Link>
+            <Link to="/popular" className="block px-4 py-2 text-black hover:bg-black hover:text-white transition-colors">
               Popular
-            </a>
-            <a
-              href="#top-rated"
-              className="block px-4 py-2 rounded-full text-black hover:bg-black hover:text-white transition-colors"
-            >
+            </Link>
+            <Link to="/top-rated" className="block px-4 py-2 text-black hover:bg-black hover:text-white transition-colors">
               Top Rated
-            </a>
-            <a
-              href="#upcoming"
-              className="block px-4 py-2 rounded-full text-black hover:bg-black hover:text-white transition-colors"
-            >
-              Upcoming
-            </a>
+            </Link>
+            <Link to="/favourites" className="block px-4 py-2 text-black hover:bg-black hover:text-white transition-colors">
+              Favourites
+            </Link>
+
             <div className="px-4 py-2">
               <input
                 type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search movies..."
-                className="w-full px-3 py-2 outline rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full px-3 py-2 rounded-full text-black outline hover:outline-2"
               />
             </div>
           </div>
