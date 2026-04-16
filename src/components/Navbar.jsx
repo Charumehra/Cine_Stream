@@ -29,6 +29,7 @@ const Navbar = ({ query, setQuery }) => {
           </div>
 
           <div className="hidden md:flex items-center">
+           <Link to="/">
             <div className="relative">
               <input
                 type="text"
@@ -39,6 +40,7 @@ const Navbar = ({ query, setQuery }) => {
               />
               <Search className="absolute right-3 top-2 text-black w-5 h-5" />
             </div>
+           </Link>
           </div>
 
           <div className="md:hidden">
