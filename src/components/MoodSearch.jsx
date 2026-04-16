@@ -1,25 +1,40 @@
 import { useState } from "react";
+import { Sparkles, Search } from "lucide-react";
 
 const MoodSearch = ({ onSearch }) => {
   const [mood, setMood] = useState("");
 
-  return (
-    <div className="flex justify-end gap-2 mb-6">
-      <p>Moody search</p>
-      <input
-        type="text"
-        placeholder="Describe your mood..."
-        value={mood}
-        onChange={(e) => setMood(e.target.value)}
-        className=" p-3 rounded-full bg-gray-800 text-white outline-none"
-      />
+  const handleSearch = () => {
+    if (!mood.trim()) return;
+    onSearch(mood);
+  };
 
-      <button
-        onClick={() => onSearch(mood)}
-        className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
-      >
-        Find Movie
-      </button>
+  return (
+    <div className="w-full max-w-5xl mx-auto mb-12 flex flex-col sm:flex-row items-center gap-4 px-4 py-4 rounded-2xl bg-gradient-to-r from-gray-900 via-black to-gray-900 border border-gray-800 shadow-lg shadow-red-500/10">
+
+      <div className="flex items-center gap-2 text-white font-semibold text-lg whitespace-nowrap">
+        <Sparkles className="text-red-500" size={20} />
+        Mood Matcher
+      </div>
+
+      <div className="flex items-center flex-1 bg-gray-900/70 backdrop-blur-md rounded-full border border-gray-800 focus-within:border-red-500 transition overflow-hidden">
+        <input
+          type="text"
+          placeholder="e.g. I feel sad but want an action movie..."
+          value={mood}
+          onChange={(e) => setMood(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          className="flex-1 bg-transparent px-5 py-3 text-white outline-none placeholder-gray-400"
+        />
+
+        <button
+          onClick={handleSearch}
+          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white px-5 py-3 m-1 rounded-full transition-all duration-200"
+        >
+          <Search size={18} />
+          <span className="hidden sm:inline">Find</span>
+        </button>
+      </div>
     </div>
   );
 };
