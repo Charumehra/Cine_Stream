@@ -36,4 +36,9 @@ An advanced React-based movie app that allows users to:
 * Debouncing API calls
 
 ## Live Link
-[https://cine-stream-nine-mu.vercel.app/]
+![Live Link ](https://cine-stream-nine-mu.vercel.app/)
+
+
+## App Screenshot
+
+![App Screenshot](https://raw.githubusercontent.com/Charumehra/Cine_Stream/53396139a1a9f7dbf40b1921872565ea37690cf0/src/assets/localhost_5175_.png)
